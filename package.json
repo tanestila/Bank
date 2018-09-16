@@ -1,0 +1,25 @@
+{
+  "name": "bank",
+  "version": "1.0.0",
+  "description": "App get information from db about users",
+  "main": "index.js",
+  "dependencies": {
+    "async": "^2.6.1",
+    "cors": "^2.8.4",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "mysql": "^2.16.0",
+    "xml-js": "^1.6.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "XML",
+    "bank",
+    "user"
+  ],
+  "author": "Parshakova Aleksandra",
+  "license": "ISC"
+}
