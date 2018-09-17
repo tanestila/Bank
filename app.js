@@ -60,12 +60,14 @@ app.get('/client/get', function (req, res) {
          if (err) console.log(err);
          connection.end();
 
-         return_data.Info[0].DateOfBirh = JSON.stringify(return_data.Info[0].DateOfBirh);
+         return_data.Client[0].DateOfBirh = JSON.stringify(return_data.Client[0].DateOfBirh);
 
          var options = {compact: true, ignoreComment: true, spaces: 4};
          var result = convert.json2xml(return_data, options);
          //console.log(result);
-         res.send(result);
+         return res.json({
+          data: result
+        })
          console.log(result);
     });
 });
