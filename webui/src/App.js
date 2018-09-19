@@ -6,13 +6,23 @@ class App extends Component {
 
 state = {
   info : '',
+}
 
-
+exportData = _ => {
+  fetch('http://127.0.0.1:4000/client/post', {
+  method: 'POST',
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    firstParam: 'yourValue',
+  }),
+});
 }
 
 importData = _ => {
-  this.setState({info: ''});
-  var id = this.refs.id.value;
+  
   fetch(`http://127.0.0.1:4000/client/get?id=${this.refs.id.value}`)
   .then(response => response.json())
   .then(response=> this.setState({info: response.data.toString()}))
@@ -35,9 +45,10 @@ importData = _ => {
  <br />
    <button className="btn  btn-primary" onClick={this.importData}> importData </button>
    <br />
-   <br />
-   <button className="btn  btn-primary" onClick={this.exportData}> exportData </button>
-
+   <form method="post" action="http://127.0.0.1:4000/client/post">
+    <textarea name="userInfo"></textarea><br />
+    <input className="btn  btn-primary"  type="submit" value="exportData" />
+</form>
       </div>
     );
   }
