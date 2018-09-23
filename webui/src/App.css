@@ -26,7 +26,11 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-input {
+input, textarea {
   width: 500px !important;
   margin: auto;
+  font-weight: 400;
+}
+textarea {
+  height: 150px;
 }

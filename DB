@@ -1,0 +1,86 @@
+-- --------------------------------------------------------
+-- Хост:                         127.0.0.1
+-- Версия сервера:               10.3.9-MariaDB - mariadb.org binary distribution
+-- Операционная система:         Win64
+-- HeidiSQL Версия:              9.4.0.5125
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Дамп структуры базы данных bank
+CREATE DATABASE IF NOT EXISTS `bank` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `bank`;
+
+-- Дамп структуры для таблица bank.bankaccount
+CREATE TABLE IF NOT EXISTS `bankaccount` (
+  `AccountNumber` int(11) NOT NULL,
+  `Currency` varchar(50) DEFAULT NULL,
+  `Balance` float NOT NULL DEFAULT 0,
+  `Owner` int(11) NOT NULL,
+  PRIMARY KEY (`AccountNumber`),
+  KEY `FK1OwnerBA` (`Owner`),
+  CONSTRAINT `FK1OwnerBA` FOREIGN KEY (`Owner`) REFERENCES `client` (`ClientId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы bank.bankaccount: ~3 rows (приблизительно)
+/*!40000 ALTER TABLE `bankaccount` DISABLE KEYS */;
+INSERT INTO `bankaccount` (`AccountNumber`, `Currency`, `Balance`, `Owner`) VALUES
+	(1, 'RUB', 1000, 1),
+	(2, 'EUR', 1000, 2),
+	(3, 'USD', 1000, 2);
+/*!40000 ALTER TABLE `bankaccount` ENABLE KEYS */;
+
+-- Дамп структуры для таблица bank.card
+CREATE TABLE IF NOT EXISTS `card` (
+  `CardNumber` int(11) NOT NULL,
+  `ExpirationDate` date DEFAULT NULL,
+  `Currency` varchar(50) DEFAULT NULL,
+  `Owner` int(11) NOT NULL,
+  `Balance` float NOT NULL DEFAULT 0,
+  PRIMARY KEY (`CardNumber`),
+  KEY `FK1Owner` (`Owner`),
+  CONSTRAINT `FK1Owner` FOREIGN KEY (`Owner`) REFERENCES `client` (`ClientId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы bank.card: ~8 rows (приблизительно)
+/*!40000 ALTER TABLE `card` DISABLE KEYS */;
+INSERT INTO `card` (`CardNumber`, `ExpirationDate`, `Currency`, `Owner`, `Balance`) VALUES
+	(1, '2020-09-13', 'RUB', 1, 1000),
+	(2, '2020-09-13', 'EUR', 2, 1000),
+	(3, '2020-09-13', 'USD', 2, 1000),
+	(4, '2021-09-21', 'RUB', 3, 50),
+	(5, NULL, NULL, 4, 1000),
+	(6, NULL, NULL, 5, 50),
+	(7, NULL, NULL, 5, 10000),
+	(100, NULL, NULL, 5, 1);
+/*!40000 ALTER TABLE `card` ENABLE KEYS */;
+
+-- Дамп структуры для таблица bank.client
+CREATE TABLE IF NOT EXISTS `client` (
+  `ClientId` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(50) NOT NULL DEFAULT '0',
+  `Surname` varchar(50) NOT NULL DEFAULT '0',
+  `DateOfBirh` datetime NOT NULL,
+  `Address` varchar(50) DEFAULT '',
+  `Phone` varchar(50) DEFAULT '',
+  PRIMARY KEY (`ClientId`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- Дамп данных таблицы bank.client: ~4 rows (приблизительно)
+/*!40000 ALTER TABLE `client` DISABLE KEYS */;
+INSERT INTO `client` (`ClientId`, `Name`, `Surname`, `DateOfBirh`, `Address`, `Phone`) VALUES
+	(1, 'Иван', 'Петрович', '1983-09-19 00:00:00', '', ''),
+	(2, 'Екатерина', 'Козловская', '1990-03-13 00:00:00', '', ''),
+	(3, 'Алиса', 'Сидорова', '1987-09-18 17:00:00', '', ''),
+	(4, 'Ирина', 'Кучма', '1999-09-20 11:45:27', '', ''),
+	(5, 'Елена', 'Попова', '1987-09-18 10:00:00', '', '');
+/*!40000 ALTER TABLE `client` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
